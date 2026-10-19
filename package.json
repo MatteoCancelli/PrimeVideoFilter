@@ -1,0 +1,14 @@
+{
+  "name": "prime-video-filter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chrome extension that hides Prime Video titles not included in Prime.",
+  "license": "GPL-3.0",
+  "scripts": {
+    "test": "node --test test/",
+    "icons": "node scripts/make-icons.js"
+  },
+  "devDependencies": {
+    "jsdom": "^30.1.3"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Prime Video Filter",
+  "version": "1.0.0",
+  "description": "Nasconde da Prime Video i contenuti non inclusi in Prime (noleggio, acquisto, canali a pagamento).",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.primevideo.com/*",
+        "https://www.amazon.it/*gp/video/*",
+        "https://www.amazon.com/*gp/video/*",
+        "https://www.amazon.co.uk/*gp/video/*",
+        "https://www.amazon.de/*gp/video/*",
+        "https://www.amazon.fr/*gp/video/*",
+        "https://www.amazon.es/*gp/video/*",
+        "https://www.amazon.ca/*gp/video/*",
+        "https://www.amazon.com.au/*gp/video/*"
+      ],
+      "js": ["src/classify.js", "src/content.js"],
+      "css": ["src/content.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
