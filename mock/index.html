@@ -15,6 +15,7 @@
   ._g8d { flex-wrap: wrap; }
   ._k3j, [data-testid="card"], ._tl, [data-testid="search-card"] { flex: 0 0 170px; background: #1b2530; border-radius: 6px; padding: 6px; }
   ._k3j img, ._tl img, article img, [data-testid="search-card"] img { display: block; width: 100%; height: 90px; background: #33414e; border-radius: 4px; }
+  ._k3j img._bdgimg { width: 40px; height: 12px; background: none; margin-top: 4px; }
   ._9f { display: inline-block; margin-top: 4px; font-size: 12px; color: #8197a4; }
   ._pb { height: 3px; background: #00a8e1; margin-top: 4px; }
   ._bdg { color: #00a8e1; font-weight: 700; font-size: 12px; }
@@ -37,7 +38,7 @@
 <main class="_m4in">
   <!-- Hero without row heading: included -->
   <div class="_hero1" data-expect="show">
-    <a href="/detail/0HERO01/ref=atv_hm_hom_c_hero"><img alt="Hero Movie" src="data:,"></a>
+    <a href="/detail/0HERO01/ref=atv_hm_hom_c_hero"><img alt="Hero Movie" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a>
     <span class="_bdg">Incluso con Prime</span>
   </div>
 
@@ -45,12 +46,12 @@
   <section class="_3kTq9" id="row-a">
     <div class="_1Mp"><h2 class="_2Hz"><span>Consigliati per te</span></h2></div>
     <div class="_r0w"><ul class="_cr1">
-      <li class="_k3j" data-expect="show"><a href="/detail/0A01/ref=x"><img alt="La casa sul lago" src="data:,"></a><img alt="Prime" src="data:," width="1" height="1"><span class="_9f">Dramma</span></li>
-      <li class="_k3j" data-expect="hide"><a href="/detail/0A02/ref=x"><img alt="Notte a Roma" src="data:,"></a><span class="_9f">Noleggia o acquista</span></li>
-      <li class="_k3j" data-expect="hide"><a href="/detail/0A03/ref=x"><img alt="Star Saga" src="data:,"></a><span class="_9f">Abbonati a Paramount+</span><span class="_9f">Canali Prime Video</span></li>
-      <li class="_k3j" data-expect="show"><a href="/detail/0A04/ref=x"><img alt="Senza badge" src="data:,"></a><span class="_9f">Commedia · 2022</span></li>
-      <li class="_k3j" data-expect="show"><a href="/detail/0A05/ref=x"><img alt="Il faro" src="data:,"></a><svg width="12" height="12"><title>Incluso con Prime</title><circle cx="6" cy="6" r="6" fill="#00a8e1"/></svg></li>
-      <li class="_k3j" data-expect="hide"><a href="/detail/0A06/ref=x"><img alt="Prezzo visibile" src="data:,"></a><span class="_9f">Da 3,99 €</span></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0A01/ref=x"><img alt="La casa sul lago" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><img class="_bdgimg" alt="Prime" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 12%22%3E%3Ctext y=%2210%22 fill=%22%2300a8e1%22 font-size=%2211%22 font-family=%22sans-serif%22 font-weight=%22bold%22%3Eprime%3C/text%3E%3C/svg%3E"><span class="_9f">Dramma</span></li>
+      <li class="_k3j" data-expect="hide"><a href="/detail/0A02/ref=x"><img alt="Notte a Roma" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_9f">Noleggia o acquista</span></li>
+      <li class="_k3j" data-expect="hide"><a href="/detail/0A03/ref=x"><img alt="Star Saga" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_9f">Abbonati a Paramount+</span><span class="_9f">Canali Prime Video</span></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0A04/ref=x"><img alt="Senza badge" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_9f">Commedia · 2022</span></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0A05/ref=x"><img alt="Il faro" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><svg width="12" height="12"><title>Incluso con Prime</title><circle cx="6" cy="6" r="6" fill="#00a8e1"/></svg></li>
+      <li class="_k3j" data-expect="hide"><a href="/detail/0A06/ref=x"><img alt="Prezzo visibile" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_9f">Da 3,99 €</span></li>
     </ul></div>
   </section>
 
@@ -58,10 +59,10 @@
   <section class="_3kTq9" id="row-b" data-expect="hide">
     <div class="_1Mp"><h2 class="_2Hz">Top movies to rent or buy</h2></div>
     <div class="_p0c" role="list">
-      <div role="listitem" class="_w8"><article data-testid="card" data-expect="hide"><a href="/detail/0B01/ref=y" aria-label="Galaxy Run"><img alt="Galaxy Run" src="data:,"></a><div class="_9f">Rent or buy</div></article></div>
-      <div role="listitem" class="_w8"><article data-testid="card" data-expect="hide"><a href="/detail/0B02/ref=y"><img alt="Ocean Deep" src="data:,"></a><div class="_9f">Buy HD $14.99</div></article></div>
-      <div role="listitem" class="_w8"><article data-testid="card" data-expect="hide"><a href="/detail/0B03/ref=y"><img alt="Night Train" src="data:,"></a><div class="_9f" aria-label="Available to rent"></div></article></div>
-      <div role="listitem" class="_w8"><article data-testid="card" data-expect="hide"><a href="/detail/0B04/ref=y"><img alt="Gold Rush" src="data:,"></a><svg width="12" height="12"><title>Store</title><rect width="12" height="12" fill="gold"/></svg></article></div>
+      <div role="listitem" class="_w8"><article data-testid="card" data-expect="hide"><a href="/detail/0B01/ref=y" aria-label="Galaxy Run"><img alt="Galaxy Run" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><div class="_9f">Rent or buy</div></article></div>
+      <div role="listitem" class="_w8"><article data-testid="card" data-expect="hide"><a href="/detail/0B02/ref=y"><img alt="Ocean Deep" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><div class="_9f">Buy HD $14.99</div></article></div>
+      <div role="listitem" class="_w8"><article data-testid="card" data-expect="hide"><a href="/detail/0B03/ref=y"><img alt="Night Train" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><div class="_9f" aria-label="Available to rent"></div></article></div>
+      <div role="listitem" class="_w8"><article data-testid="card" data-expect="hide"><a href="/detail/0B04/ref=y"><img alt="Gold Rush" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><svg width="12" height="12"><title>Store</title><rect width="12" height="12" fill="gold"/></svg></article></div>
     </div>
   </section>
 
@@ -69,9 +70,9 @@
   <section class="_3kTq9" id="row-c" data-expect="hide">
     <div class="_1Mp"><h3 class="_2Hz">Canali: prova gratis</h3></div>
     <div class="_cX">
-      <div class="_tl" data-expect="hide"><div class="_a9"><a href="/detail/0C01/ref=z"><img alt="Thriller Max" src="data:,"></a></div><div class="_b8"><span class="_9f">Prova gratis per 7 giorni</span></div></div>
-      <div class="_tl" data-expect="hide"><div class="_a9"><a href="/detail/0C02/ref=z"><img alt="Docu Planet" src="data:,"></a></div><div class="_b8"><span class="_9f">Iscriviti a Discovery+</span></div></div>
-      <div class="_tl" data-expect="hide"><a href="/storefront/?benefitId=appletvplusit&amp;ref_=dvm"><img alt="Apple TV+" src="data:,"></a><span class="_9f">7 giorni gratis</span></div>
+      <div class="_tl" data-expect="hide"><div class="_a9"><a href="/detail/0C01/ref=z"><img alt="Thriller Max" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a></div><div class="_b8"><span class="_9f">Prova gratis per 7 giorni</span></div></div>
+      <div class="_tl" data-expect="hide"><div class="_a9"><a href="/detail/0C02/ref=z"><img alt="Docu Planet" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a></div><div class="_b8"><span class="_9f">Iscriviti a Discovery+</span></div></div>
+      <div class="_tl" data-expect="hide"><a href="/storefront/?benefitId=appletvplusit&amp;ref_=dvm"><img alt="Apple TV+" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_9f">7 giorni gratis</span></div>
     </div>
   </section>
 
@@ -79,11 +80,11 @@
   <section class="_3kTq9" id="row-d">
     <div class="_1Mp"><h2 class="_2Hz">Continua a guardare</h2></div>
     <ul class="_cr1">
-      <li class="_k3j" data-expect="show"><a href="/detail/0D01/ref=cw"><img alt="Serie A" src="data:,"></a><span class="_bdg">prime</span><div class="_pb" style="width:40%"></div></li>
-      <li class="_k3j" data-expect="show"><a href="/detail/0D02/ref=cw"><img alt="Film noleggiato" src="data:,"></a><span class="_9f">Il noleggio scade tra 2 giorni</span><div class="_pb" style="width:70%"></div></li>
-      <li class="_k3j" data-expect="hide"><a href="/detail/0D03/ref=cw"><img alt="Episodio 2" src="data:,"></a><span class="_9f">Acquista la stagione</span><div class="_pb" style="width:100%"></div></li>
-      <li class="_k3j" data-expect="show"><a href="/detail/0D04/ref=cw"><img alt="Solo progresso" src="data:,"></a><div class="_pb" style="width:10%"></div></li>
-      <li class="_k3j" data-expect="show" data-card-entitlement="Entitled"><a href="/detail/0D05/ref=cw"><img alt="Entitled" src="data:,"></a><span class="_9f">Rent</span></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0D01/ref=cw"><img alt="Serie A" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_bdg">prime</span><div class="_pb" style="width:40%"></div></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0D02/ref=cw"><img alt="Film noleggiato" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_9f">Il noleggio scade tra 2 giorni</span><div class="_pb" style="width:70%"></div></li>
+      <li class="_k3j" data-expect="hide"><a href="/detail/0D03/ref=cw"><img alt="Episodio 2" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_9f">Acquista la stagione</span><div class="_pb" style="width:100%"></div></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0D04/ref=cw"><img alt="Solo progresso" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><div class="_pb" style="width:10%"></div></li>
+      <li class="_k3j" data-expect="show" data-card-entitlement="Entitled"><a href="/detail/0D05/ref=cw"><img alt="Entitled" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_9f">Rent</span></li>
     </ul>
   </section>
 
@@ -91,12 +92,12 @@
   <section class="_3kTq9" id="row-e">
     <div class="_1Mp"><h2 class="_2Hz">Edge cases</h2></div>
     <ul class="_cr1">
-      <li class="_k3j" data-expect="show"><a href="/detail/0E01/ref=e"><img alt="Rent" src="data:,"></a><h3 class="_9f">Rent</h3></li>
-      <li class="_k3j" data-expect="show"><a href="/detail/0E02/ref=e"><img alt="Both" src="data:,"></a><span class="_bdg">Prime</span><span class="_9f">Rent or buy in 4K</span></li>
-      <li class="_k3j" data-expect="show"><a href="/detail/0E03/ref=e"><img alt="Long synopsis" src="data:,"></a><p class="_9f">A struggling musician who cannot pay the rent has to move back home and buy time before the big gig.</p></li>
-      <li class="_k3j" data-expect="show"><a href="/detail/0E04/ref=e"><img alt="Freevee" src="data:,"></a><span class="_9f">Free with ads</span></li>
-      <li class="_k3j" data-expect="show"><a href="/detail/0E05/ref=e"><img alt="Bought" src="data:,"></a><span class="_9f">Purchased</span></li>
-      <li class="_k3j" data-expect="hide"><div data-card-entitlement="Unentitled"><a href="/detail/0E06/ref=e"><img alt="Unentitled" src="data:,"></a></div></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0E01/ref=e"><img alt="Rent" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><h3 class="_9f">Rent</h3></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0E02/ref=e"><img alt="Both" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_bdg">Prime</span><span class="_9f">Rent or buy in 4K</span></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0E03/ref=e"><img alt="Long synopsis" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><p class="_9f">A struggling musician who cannot pay the rent has to move back home and buy time before the big gig.</p></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0E04/ref=e"><img alt="Freevee" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_9f">Free with ads</span></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0E05/ref=e"><img alt="Bought" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_9f">Purchased</span></li>
+      <li class="_k3j" data-expect="hide"><div data-card-entitlement="Unentitled"><a href="/detail/0E06/ref=e"><img alt="Unentitled" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a></div></li>
     </ul>
   </section>
 
@@ -104,10 +105,10 @@
   <div class="_srch" id="search" data-expect="show">
     <h1 class="_2Hz">Results for "space"</h1>
     <div class="_g8d">
-      <div data-testid="search-card" data-expect="show"><a href="/detail/0S01/ref=s"><img alt="Space One" src="data:,"></a><span class="_9f">Included with Prime</span></div>
-      <div data-testid="search-card" data-expect="hide"><a href="/detail/0S02/ref=s"><img alt="Space Two" src="data:,"></a><span class="_9f">Rent from €3.99</span></div>
-      <div data-testid="search-card" data-expect="show"><a href="/detail/0S03/ref=s"><img alt="Space Three" src="data:,"></a><span class="_9f">Watch with Prime</span></div>
-      <div data-testid="search-card" data-expect="hide"><a href="/detail/0S04/ref=s"><img alt="Space Four" src="data:,"></a><span class="_9f">Subscribe to Apple TV+</span></div>
+      <div data-testid="search-card" data-expect="show"><a href="/detail/0S01/ref=s"><img alt="Space One" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_9f">Included with Prime</span></div>
+      <div data-testid="search-card" data-expect="hide"><a href="/detail/0S02/ref=s"><img alt="Space Two" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_9f">Rent from €3.99</span></div>
+      <div data-testid="search-card" data-expect="show"><a href="/detail/0S03/ref=s"><img alt="Space Three" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_9f">Watch with Prime</span></div>
+      <div data-testid="search-card" data-expect="hide"><a href="/detail/0S04/ref=s"><img alt="Space Four" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_9f">Subscribe to Apple TV+</span></div>
     </div>
   </div>
 </main>
@@ -116,7 +117,7 @@
   // Dynamic content, like infinite scroll / SPA navigation.
   const main = document.querySelector('main');
   const li = (id, alt, label, expect) =>
-    `<li class="_k3j" data-expect="${expect}"><a href="/detail/${id}/ref=dyn"><img alt="${alt}" src="data:,"></a><span class="_9f">${label}</span></li>`;
+    `<li class="_k3j" data-expect="${expect}"><a href="/detail/${id}/ref=dyn"><img alt="${alt}" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22/%3E"></a><span class="_9f">${label}</span></li>`;
   const section = (id, title, items, expect) =>
     `<section class="_3kTq9" id="${id}"${expect ? ` data-expect="${expect}"` : ''}><div class="_1Mp"><h2 class="_2Hz">${title}</h2></div><ul class="_cr1">${items.join('')}</ul></section>`;
 
