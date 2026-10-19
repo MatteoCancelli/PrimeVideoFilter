@@ -98,3 +98,8 @@ test('findCard ignores links without a title id', () => {
   const doc = dom('<a href="/settings">x</a>');
   assert.equal(findCard(doc.querySelector('a')), null);
 });
+
+test('findCard ignores site navigation links', () => {
+  const doc = dom('<nav><a href="/storefront/?benefitId=channels">Canali</a></nav>');
+  assert.equal(findCard(doc.querySelector('a')), null);
+});

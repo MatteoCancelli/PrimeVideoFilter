@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prime Video Filter – mock</title>
+<link rel="stylesheet" href="../src/content.css">
+<style>
+  body { margin: 0; font: 14px/1.4 system-ui, sans-serif; background: #0f171e; color: #fff; }
+  ._hdr7Q { display: flex; gap: 16px; align-items: center; padding: 12px 16px; background: #1a242f; }
+  ._hdr7Q a { color: #aab; text-decoration: none; }
+  ._3kTq9 { padding: 8px 16px; }
+  ._2Hz { font-size: 18px; margin: 8px 0; }
+  ._cr1, ._p0c, ._cX, ._g8d { display: flex; gap: 10px; overflow-x: auto; list-style: none; margin: 0; padding: 0; }
+  ._g8d { flex-wrap: wrap; }
+  ._k3j, [data-testid="card"], ._tl, [data-testid="search-card"] { flex: 0 0 170px; background: #1b2530; border-radius: 6px; padding: 6px; }
+  ._k3j img, ._tl img, article img, [data-testid="search-card"] img { display: block; width: 100%; height: 90px; background: #33414e; border-radius: 4px; }
+  ._9f { display: inline-block; margin-top: 4px; font-size: 12px; color: #8197a4; }
+  ._pb { height: 3px; background: #00a8e1; margin-top: 4px; }
+  ._bdg { color: #00a8e1; font-weight: 700; font-size: 12px; }
+  #pvf-mock-bar { position: sticky; top: 0; z-index: 9; display: flex; gap: 12px; align-items: center; padding: 8px 16px; background: #232f3e; }
+  #pvf-mock-status.ok { color: #6f6; } #pvf-mock-status.fail { color: #f66; }
+</style>
+</head>
+<!-- data-expect="show|hide" = what the filter must do with that element; checked by the self-check bar and by test/content.test.js. -->
+<body data-settle-ms="3500">
+<div id="pvf-mock-bar">
+  <strong>Mock Prime Video</strong>
+  <button id="pvf-debug-toggle" type="button">Toggle DEBUG</button>
+  <span id="pvf-mock-status">Self-check in corso (attendo le card dinamiche)…</span>
+</div>
+
+<header class="_hdr7Q">
+  <a href="/storefront/home">Home</a><a href="/storefront/movie">Film</a><a href="/storefront/tv">Serie TV</a><a href="/storefront/?benefitId=channels" data-expect="show">Canali</a>
+</header>
+
+<main class="_m4in">
+  <!-- Hero without row heading: included -->
+  <div class="_hero1" data-expect="show">
+    <a href="/detail/0HERO01/ref=atv_hm_hom_c_hero"><img alt="Hero Movie" src="data:,"></a>
+    <span class="_bdg">Incluso con Prime</span>
+  </div>
+
+  <!-- Row A (IT): mixed, li cards, labels in many forms. Dynamic cards are appended at ~1s. -->
+  <section class="_3kTq9" id="row-a">
+    <div class="_1Mp"><h2 class="_2Hz"><span>Consigliati per te</span></h2></div>
+    <div class="_r0w"><ul class="_cr1">
+      <li class="_k3j" data-expect="show"><a href="/detail/0A01/ref=x"><img alt="La casa sul lago" src="data:,"></a><img alt="Prime" src="data:," width="1" height="1"><span class="_9f">Dramma</span></li>
+      <li class="_k3j" data-expect="hide"><a href="/detail/0A02/ref=x"><img alt="Notte a Roma" src="data:,"></a><span class="_9f">Noleggia o acquista</span></li>
+      <li class="_k3j" data-expect="hide"><a href="/detail/0A03/ref=x"><img alt="Star Saga" src="data:,"></a><span class="_9f">Abbonati a Paramount+</span><span class="_9f">Canali Prime Video</span></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0A04/ref=x"><img alt="Senza badge" src="data:,"></a><span class="_9f">Commedia · 2022</span></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0A05/ref=x"><img alt="Il faro" src="data:,"></a><svg width="12" height="12"><title>Incluso con Prime</title><circle cx="6" cy="6" r="6" fill="#00a8e1"/></svg></li>
+      <li class="_k3j" data-expect="hide"><a href="/detail/0A06/ref=x"><img alt="Prezzo visibile" src="data:,"></a><span class="_9f">Da 3,99 €</span></li>
+    </ul></div>
+  </section>
+
+  <!-- Row B (EN): only paid, article cards inside role=list. The whole row must disappear. -->
+  <section class="_3kTq9" id="row-b" data-expect="hide">
+    <div class="_1Mp"><h2 class="_2Hz">Top movies to rent or buy</h2></div>
+    <div class="_p0c" role="list">
+      <div role="listitem" class="_w8"><article data-testid="card" data-expect="hide"><a href="/detail/0B01/ref=y" aria-label="Galaxy Run"><img alt="Galaxy Run" src="data:,"></a><div class="_9f">Rent or buy</div></article></div>
+      <div role="listitem" class="_w8"><article data-testid="card" data-expect="hide"><a href="/detail/0B02/ref=y"><img alt="Ocean Deep" src="data:,"></a><div class="_9f">Buy HD $14.99</div></article></div>
+      <div role="listitem" class="_w8"><article data-testid="card" data-expect="hide"><a href="/detail/0B03/ref=y"><img alt="Night Train" src="data:,"></a><div class="_9f" aria-label="Available to rent"></div></article></div>
+      <div role="listitem" class="_w8"><article data-testid="card" data-expect="hide"><a href="/detail/0B04/ref=y"><img alt="Gold Rush" src="data:,"></a><svg width="12" height="12"><title>Store</title><rect width="12" height="12" fill="gold"/></svg></article></div>
+    </div>
+  </section>
+
+  <!-- Row C (IT): paid channels, plain div cards (no li/article), one channel offer link. Row must disappear. -->
+  <section class="_3kTq9" id="row-c" data-expect="hide">
+    <div class="_1Mp"><h3 class="_2Hz">Canali: prova gratis</h3></div>
+    <div class="_cX">
+      <div class="_tl" data-expect="hide"><div class="_a9"><a href="/detail/0C01/ref=z"><img alt="Thriller Max" src="data:,"></a></div><div class="_b8"><span class="_9f">Prova gratis per 7 giorni</span></div></div>
+      <div class="_tl" data-expect="hide"><div class="_a9"><a href="/detail/0C02/ref=z"><img alt="Docu Planet" src="data:,"></a></div><div class="_b8"><span class="_9f">Iscriviti a Discovery+</span></div></div>
+      <div class="_tl" data-expect="hide"><a href="/storefront/?benefitId=appletvplusit&amp;ref_=dvm"><img alt="Apple TV+" src="data:,"></a><span class="_9f">7 giorni gratis</span></div>
+    </div>
+  </section>
+
+  <!-- Row D (IT): "Continua a guardare". Only the card still to buy disappears. -->
+  <section class="_3kTq9" id="row-d">
+    <div class="_1Mp"><h2 class="_2Hz">Continua a guardare</h2></div>
+    <ul class="_cr1">
+      <li class="_k3j" data-expect="show"><a href="/detail/0D01/ref=cw"><img alt="Serie A" src="data:,"></a><span class="_bdg">prime</span><div class="_pb" style="width:40%"></div></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0D02/ref=cw"><img alt="Film noleggiato" src="data:,"></a><span class="_9f">Il noleggio scade tra 2 giorni</span><div class="_pb" style="width:70%"></div></li>
+      <li class="_k3j" data-expect="hide"><a href="/detail/0D03/ref=cw"><img alt="Episodio 2" src="data:,"></a><span class="_9f">Acquista la stagione</span><div class="_pb" style="width:100%"></div></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0D04/ref=cw"><img alt="Solo progresso" src="data:,"></a><div class="_pb" style="width:10%"></div></li>
+      <li class="_k3j" data-expect="show" data-card-entitlement="Entitled"><a href="/detail/0D05/ref=cw"><img alt="Entitled" src="data:,"></a><span class="_9f">Rent</span></li>
+    </ul>
+  </section>
+
+  <!-- Row E (EN): edge cases. -->
+  <section class="_3kTq9" id="row-e">
+    <div class="_1Mp"><h2 class="_2Hz">Edge cases</h2></div>
+    <ul class="_cr1">
+      <li class="_k3j" data-expect="show"><a href="/detail/0E01/ref=e"><img alt="Rent" src="data:,"></a><h3 class="_9f">Rent</h3></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0E02/ref=e"><img alt="Both" src="data:,"></a><span class="_bdg">Prime</span><span class="_9f">Rent or buy in 4K</span></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0E03/ref=e"><img alt="Long synopsis" src="data:,"></a><p class="_9f">A struggling musician who cannot pay the rent has to move back home and buy time before the big gig.</p></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0E04/ref=e"><img alt="Freevee" src="data:,"></a><span class="_9f">Free with ads</span></li>
+      <li class="_k3j" data-expect="show"><a href="/detail/0E05/ref=e"><img alt="Bought" src="data:,"></a><span class="_9f">Purchased</span></li>
+      <li class="_k3j" data-expect="hide"><div data-card-entitlement="Unentitled"><a href="/detail/0E06/ref=e"><img alt="Unentitled" src="data:,"></a></div></li>
+    </ul>
+  </section>
+
+  <!-- Search results (EN): grid, page h1, no row headings: cards hide one by one, nothing else. -->
+  <div class="_srch" id="search" data-expect="show">
+    <h1 class="_2Hz">Results for "space"</h1>
+    <div class="_g8d">
+      <div data-testid="search-card" data-expect="show"><a href="/detail/0S01/ref=s"><img alt="Space One" src="data:,"></a><span class="_9f">Included with Prime</span></div>
+      <div data-testid="search-card" data-expect="hide"><a href="/detail/0S02/ref=s"><img alt="Space Two" src="data:,"></a><span class="_9f">Rent from €3.99</span></div>
+      <div data-testid="search-card" data-expect="show"><a href="/detail/0S03/ref=s"><img alt="Space Three" src="data:,"></a><span class="_9f">Watch with Prime</span></div>
+      <div data-testid="search-card" data-expect="hide"><a href="/detail/0S04/ref=s"><img alt="Space Four" src="data:,"></a><span class="_9f">Subscribe to Apple TV+</span></div>
+    </div>
+  </div>
+</main>
+
+<script>
+  // Dynamic content, like infinite scroll / SPA navigation.
+  const main = document.querySelector('main');
+  const li = (id, alt, label, expect) =>
+    `<li class="_k3j" data-expect="${expect}"><a href="/detail/${id}/ref=dyn"><img alt="${alt}" src="data:,"></a><span class="_9f">${label}</span></li>`;
+  const section = (id, title, items, expect) =>
+    `<section class="_3kTq9" id="${id}"${expect ? ` data-expect="${expect}"` : ''}><div class="_1Mp"><h2 class="_2Hz">${title}</h2></div><ul class="_cr1">${items.join('')}</ul></section>`;
+
+  setTimeout(() => {
+    document.querySelector('#row-a ul').insertAdjacentHTML('beforeend',
+      li('0A07', 'Dinamico pagato', 'Noleggia', 'hide') + li('0A08', 'Dinamico incluso', 'Incluso con Prime', 'show'));
+  }, 1000);
+  setTimeout(() => {
+    main.insertAdjacentHTML('beforeend', section('row-f', 'Novità a noleggio (dinamica)',
+      [li('0F01', 'Nuovo 1', 'Noleggia', 'hide'), li('0F02', 'Nuovo 2', 'Acquista', 'hide'), li('0F03', 'Nuovo 3', 'Free trial', 'hide')], 'hide'));
+  }, 2000);
+  setTimeout(() => {
+    main.insertAdjacentHTML('beforeend', section('row-g', 'Mixed row (dynamic)',
+      [li('0G01', 'New 1', 'Buy', 'hide'), li('0G02', 'New 2', 'prime', 'show'), li('0G03', 'New 3', 'Thriller', 'show')]));
+  }, 2500);
+
+  // Self-check: compares real visibility with data-expect once dynamic content has settled.
+  setTimeout(() => {
+    const wrong = [...document.querySelectorAll('[data-expect]')].filter((el) =>
+      (el.getClientRects().length > 0) !== (el.dataset.expect === 'show'));
+    const status = document.getElementById('pvf-mock-status');
+    const debug = document.documentElement.hasAttribute('data-pvf-debug');
+    status.className = wrong.length || debug ? 'fail' : 'ok';
+    status.textContent = debug ? 'DEBUG attivo: self-check non significativo'
+      : wrong.length ? `Self-check FAIL: ${wrong.map((el) => el.textContent.trim().slice(0, 30)).join(' | ')}`
+      : `Self-check OK (${document.querySelectorAll('[data-expect]').length} casi)`;
+    document.body.dataset.selfCheck = wrong.length ? 'fail' : 'ok';
+  }, Number(document.body.dataset.settleMs));
+
+  document.getElementById('pvf-debug-toggle').addEventListener('click', () =>
+    document.documentElement.toggleAttribute('data-pvf-debug'));
+</script>
+<script src="../src/classify.js"></script>
+<script src="../src/content.js"></script>
+</body>
+</html>

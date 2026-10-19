@@ -65,7 +65,7 @@ const matches = (m, label) => m.exact.has(label) || m.phrases.some((re) => re.te
 // Anti-over-hiding: never crosses body/main/nav/h1, MAX_CARD_DEPTH levels or MAX_CARD_NODES nodes.
 function findCard(anchor) {
   const key = titleKey(anchor.getAttribute('href'));
-  if (!key) return null;
+  if (!key || anchor.closest('header, nav')) return null; // site menu, not a card
   let card = anchor;
   for (let el = anchor.parentElement, depth = 0; el && depth < MAX_CARD_DEPTH; el = el.parentElement, depth++) {
     if (card.matches(CARD_HINT) || el.matches(CARD_STOP) || el.querySelector('h1')) break;

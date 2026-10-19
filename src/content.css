@@ -1,0 +1,15 @@
+html:not([data-pvf-debug]) [data-pvf="paid"],
+html:not([data-pvf-debug]) [data-pvf-row="empty"] {
+  display: none !important;
+}
+
+html[data-pvf-debug] [data-pvf="paid"] {
+  outline: 3px solid red !important;
+  outline-offset: -3px;
+  background-color: rgba(255, 0, 0, 0.35) !important;
+}
+
+html[data-pvf-debug] [data-pvf-row="empty"] {
+  outline: 3px dashed red !important;
+  outline-offset: -3px;
+}
