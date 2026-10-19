@@ -12,17 +12,17 @@ const cardOf = new WeakMap(); // anchor -> card, so unchanged cards skip findCar
 // The section around a card that has exactly one row heading (outside cards).
 // null when the nearest section has several headings: hiding it could remove other rows.
 function findRow(card, cache) {
+  const visited = [];
+  let row = null;
   for (let el = card.parentElement; el && !el.matches(ROW_STOP); el = el.parentElement) {
-    if (cache.has(el)) return cache.get(el);
-    if (el.querySelector('h1')) return null;
+    if (cache.has(el)) { row = cache.get(el); break; }
+    visited.push(el);
+    if (el.querySelector('h1')) break;
     const headings = [...el.querySelectorAll(ROW_HEADING)].filter((h) => !h.closest('[data-pvf]'));
-    if (headings.length) {
-      const row = headings.length === 1 ? el : null;
-      cache.set(el, row);
-      return row;
-    }
+    if (headings.length) { row = headings.length === 1 ? el : null; break; }
   }
-  return null;
+  for (const el of visited) cache.set(el, row);
+  return row;
 }
 
 function scan() {

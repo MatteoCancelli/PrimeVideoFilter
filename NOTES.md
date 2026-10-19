@@ -25,6 +25,7 @@ Log del lavoro svolto in autonomia (notte 19–20/10/2026).
 ## Verifiche fatte
 
 - `npm test`: 50 test (node:test + jsdom) su classificazione, ricerca della card, nascondimento, CSS, righe vuote, card dinamiche, riga che ricompare, card `unknown` che diventano `paid`, nodi riciclati, pagina di dettaglio, amazon.it non-video, e l'intera mock page (ogni elemento `data-expect` controllato).
+- Prestazioni (jsdom, che è molto più lento di Chrome): pagina sintetica con 60 righe × 30 card = 1800 card → prima scansione ~460 ms, scansioni successive ~60 ms (le card già decise vengono saltate; il lookup delle righe è memorizzato per scansione).
 - **Chrome non è installato su questa macchina**; c'è Microsoft Edge 155 (Chromium). Con Edge headless:
   - `mock/index.html` aperto da file: self-check "OK (42 casi)" con layout e CSS reali (screenshot controllato).
   - **Estensione reale caricata** (`--load-extension`) e mock servita da un server HTTPS locale con `--host-resolver-rules="MAP www.primevideo.com 127.0.0.1:8443, MAP * ~NOTFOUND"` (nessuna richiesta verso Amazon: tutti gli altri host sono bloccati). Il manifest viene accettato, il content script e il CSS vengono iniettati, self-check OK su `https://www.primevideo.com/storefront/home`, `https://www.amazon.it/gp/video/storefront` e `https://www.amazon.it/-/en/gp/video/storefront`; su `https://www.amazon.it/dp/B000` (non video) correttamente non fa nulla. Nessun errore di manifest nel log.
