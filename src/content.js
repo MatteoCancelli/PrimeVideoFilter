@@ -8,6 +8,9 @@ const DEBUG = false;
 const ROW_HEADING = 'h2, h3, h4, [role="heading"]';
 const ROW_STOP = 'html, body, main, [role="main"]';
 const cardOf = new WeakMap(); // anchor -> card, so unchanged cards skip findCard
+// Titles seen as paid anywhere, e.g. in the hover preview, which is rendered outside the
+// thumbnail card: every card of that title is then hidden.
+const paidKeys = new Set();
 
 // The section around a card that has exactly one row heading (outside cards).
 // null when the nearest section has several headings: hiding it could remove other rows.
@@ -41,6 +44,10 @@ function scan() {
     if (card.dataset.pvfKey === key && card.dataset.pvf !== 'unknown') continue;
     card.dataset.pvf = classifyCard(card);
     card.dataset.pvfKey = key;
+    if (card.dataset.pvf === 'paid') paidKeys.add(key);
+  }
+  for (const card of cards) {
+    if (paidKeys.has(card.dataset.pvfKey)) card.dataset.pvf = 'paid';
   }
 
   const rows = new Map(); // row -> every card in it is paid

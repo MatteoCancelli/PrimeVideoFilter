@@ -99,6 +99,17 @@ test('re-checks an included card when hover adds a teaser label', async () => {
   assert.equal(li.dataset.pvf, 'paid');
 });
 
+test('a paid hover preview outside the card hides the thumbnail of the same title', async () => {
+  const w = load(row('r1', 'Mix', [tile(1, 'prime'), tile(2, 'prime')]));
+  const thumb = w.document.querySelector('li');
+  assert.equal(thumb.dataset.pvf, 'included');
+  w.document.body.insertAdjacentHTML('beforeend',
+    '<div id="popup"><a href="/detail/1?ref=hover">Play</a><p>Primo episodio gratuito, gli episodi successivi richiedono abbonamento</p></div>');
+  await wait(400);
+  assert.equal(thumb.dataset.pvf, 'paid');
+  assert.equal(w.document.querySelectorAll('li')[1].dataset.pvf, 'included');
+});
+
 test('the CSS hides Unentitled cards before the script marks them', () => {
   const { window: w } = new JSDOM(`<style>${src('content.css')}</style><div id="slot"><article data-testid="card" data-card-entitlement="Unentitled"><a href="/detail/1">x</a></article></div>`);
   assert.equal(w.getComputedStyle(w.document.querySelector('article')).display, 'none');

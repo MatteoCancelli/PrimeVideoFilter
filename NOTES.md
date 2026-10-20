@@ -30,7 +30,7 @@ Log del lavoro svolto in autonomia (notte 19–20/10/2026).
 
 - Seconda prova reale: il filtro funziona (13 card `Unentitled`, 17 nascoste), ma le card apparivano e poi sparivano durante lo scorrimento. Ora: (a) regola CSS diretta su `article[data-testid="card"][data-card-entitlement="Unentitled"]` + slot via `:has(> …:only-child)`; (b) scansione con `requestAnimationFrame` + `setTimeout(100)` di riserva (rAF da solo non gira in headless/schede in background: trovato con Edge headless); (c) card il cui contenuto cambia vengono riclassificate (l'observer annota la card toccata).
 - Richiesta dell'utente: nascondere anche "Primo episodio gratuito, gli episodi successivi richiedono abbonamento". Nuova categoria `teaser` che vince su tutto, anche su `Entitled`. **Cambiata la priorità**: l'attributo `data-card-entitlement` ora vince sulle etichette "incluse" (prima era il contrario); è il segnale più affidabile visto finora.
-- Non ancora visto: se l'etichetta "Primo episodio gratuito" è presente a riposo o solo in hover. Se solo in hover, quelle card spariscono solo dopo il passaggio del mouse.
+- Terza prova reale: "Primo episodio gratuito" compare solo nell'anteprima in hover, che è un elemento **fuori** dalla card: veniva nascosta l'anteprima ma non la thumbnail (marcata `Entitled`). Ora un titolo visto come `paid` in qualunque elemento finisce in `paidKeys` e tutte le card con lo stesso id `/detail/…` vengono nascoste. Limite: queste card spariscono solo dopo il primo hover (a riposo non c'è ancora un segnale noto).
 
 ## Verifiche fatte
 
