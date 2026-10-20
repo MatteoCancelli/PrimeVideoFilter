@@ -22,6 +22,12 @@ Log del lavoro svolto in autonomia (notte 19–20/10/2026).
 16. **Icone**: generate da `scripts/make-icons.js` (encoder PNG con `zlib` di Node, niente dipendenze).
 17. **Licenza**: il repo aveva già `LICENSE` GPL-3.0; `package.json` la dichiara.
 
+## Aggiornamento 20/10/2026 (dopo la prova sul sito reale)
+
+- Confermato dal markup reale: la card è `<article data-testid="card" data-card-entitlement="Unentitled|...">`, con dentro `<section data-testid="card-section">`. Le etichette testuali ("Iscriviti", "Noleggia") compaiono **solo in hover**; a riposo il segnale affidabile è `data-card-entitlement`, più l'icona `<svg><title>Store Filled</title>`.
+- Bug: `CARD_HINT` accettava qualunque `data-testid*="card"` e si fermava al `section` interno, perdendo l'attributo dell'article → card `unknown` finché non si passava il mouse, e spazio vuoto. Ora vale solo `data-testid="card"`; inoltre vengono presi i wrapper con un solo figlio, così sparisce anche lo slot del carosello.
+- Aggiunte etichette "Iscriviti", "Disponibile per la prenotazione"/"Preordina"/"Pre-order", "Store Filled".
+
 ## Verifiche fatte
 
 - `npm test`: 50 test (node:test + jsdom) su classificazione, ricerca della card, nascondimento, CSS, righe vuote, card dinamiche, riga che ricompare, card `unknown` che diventano `paid`, nodi riciclati, pagina di dettaglio, amazon.it non-video, e l'intera mock page (ogni elemento `data-expect` controllato).

@@ -115,3 +115,18 @@ test('findCard does not take the list when it has a single card', () => {
   const doc = dom('<section><h2>R</h2><ul id="list"><li id="c"><a href="/detail/1">x</a></li></ul></section>');
   assert.equal(findCard(doc.querySelector('a')).id, 'c');
 });
+
+// Trimmed copy of a real card (primevideo.com, 20/10/2026), before any hover.
+const realCard = (entitlement, title) => `<div class="_row"><div class="_slot"><article class="ulDoOY I3vXhO ae7h_p" data-card-title="${title}" data-card-entity-type="TV Show" data-card-entitlement="${entitlement}" data-card-position="1" data-card-can-hover="true" data-testid="card"><section class="qFCD8F Hbj8Gx" data-testid="card-section"><div class="BVySw9 jaSqrZ" data-testid="packshot"><button class="n17vJx" aria-label="${title}" aria-expanded="false"></button><a href="/detail/0SPIF${title.length}?jic=8&amp;ref_=atv_hm_hom_c_cjm7wb_2_2" class="zyfcZQ" tabindex="-1">${title}</a><div class="lz5SHd ITi_XJ"><picture><img alt="" data-testid="base-image" src="x.jpg"></picture></div></div><span data-testid="metadata-badge" aria-label="DI TENDENZA" role="img">DI TENDENZA</span><div class="MaQfAR OhaBAC" data-testid="card-overlay"><div class="U6kOYF"><svg role="img" aria-hidden="true"><title>Store Filled</title></svg></div></div></section></article></div><div class="_slot"><article data-testid="card"><a href="/detail/OTHER">Other</a></article></div></div>`;
+
+test('real card: Unentitled is paid, and the whole slot is the card', () => {
+  const doc = dom(realCard('Unentitled', 'Tenken - Reincarnato in una spada'));
+  const c = findCard(doc.querySelector('a'));
+  assert.equal(c.className, '_slot');
+  assert.equal(classifyCard(c), 'paid');
+});
+
+test('real card: Entitled is included', () => {
+  const doc = dom(realCard('Entitled', 'Arma letale 4').replace('<title>Store Filled</title>', ''));
+  assert.equal(classifyCard(findCard(doc.querySelector('a'))), 'included');
+});

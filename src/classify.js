@@ -31,8 +31,8 @@ const LABELS = {
       'prova gratis', 'prova gratuita', 'periodo di prova', 'free trial', 'start your free trial',
       'canali prime video', 'canale prime video', 'prime video channels', 'prime video channel',
     ],
-    // The store entitlement icon tends to carry just this word.
-    exact: ['store', 'negozio'],
+    // The store icon: <svg><title>Store Filled</title> on real cards.
+    exact: ['store', 'store filled', 'negozio'],
   },
 };
 
@@ -42,7 +42,8 @@ const PRICE_RE = /[€$£]\s?\d|\d(?:[.,]\d{2})?\s?(?:€|eur\b)/i;
 // Links that identify a title (or a channel offer) and therefore a card.
 const ANCHOR_SELECTOR = 'a[href*="/detail/"], a[href*="/dp/"], a[href*="benefitId="]';
 // Elements that look like a card boundary: stop climbing there.
-const CARD_HINT = 'li, article, [role="listitem"], [data-testid*="card" i]';
+// Real Prime Video (10/2026): <article data-testid="card" data-card-entitlement="..."> wraps <section data-testid="card-section">.
+const CARD_HINT = 'li, article, [role="listitem"], [data-testid="card"]';
 // Never treat these (or anything above them) as a card.
 const CARD_STOP = 'html, body, main, [role="main"], header, nav, footer, h1';
 const MAX_CARD_DEPTH = 10;
