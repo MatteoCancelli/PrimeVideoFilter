@@ -28,6 +28,10 @@ Log del lavoro svolto in autonomia (notte 19–20/10/2026).
 - Bug: `CARD_HINT` accettava qualunque `data-testid*="card"` e si fermava al `section` interno, perdendo l'attributo dell'article → card `unknown` finché non si passava il mouse, e spazio vuoto. Ora vale solo `data-testid="card"`; inoltre vengono presi i wrapper con un solo figlio, così sparisce anche lo slot del carosello.
 - Aggiunte etichette "Iscriviti", "Disponibile per la prenotazione"/"Preordina"/"Pre-order", "Store Filled".
 
+- Seconda prova reale: il filtro funziona (13 card `Unentitled`, 17 nascoste), ma le card apparivano e poi sparivano durante lo scorrimento. Ora: (a) regola CSS diretta su `article[data-testid="card"][data-card-entitlement="Unentitled"]` + slot via `:has(> …:only-child)`; (b) scansione con `requestAnimationFrame` + `setTimeout(100)` di riserva (rAF da solo non gira in headless/schede in background: trovato con Edge headless); (c) card il cui contenuto cambia vengono riclassificate (l'observer annota la card toccata).
+- Richiesta dell'utente: nascondere anche "Primo episodio gratuito, gli episodi successivi richiedono abbonamento". Nuova categoria `teaser` che vince su tutto, anche su `Entitled`. **Cambiata la priorità**: l'attributo `data-card-entitlement` ora vince sulle etichette "incluse" (prima era il contrario); è il segnale più affidabile visto finora.
+- Non ancora visto: se l'etichetta "Primo episodio gratuito" è presente a riposo o solo in hover. Se solo in hover, quelle card spariscono solo dopo il passaggio del mouse.
+
 ## Verifiche fatte
 
 - `npm test`: 50 test (node:test + jsdom) su classificazione, ricerca della card, nascondimento, CSS, righe vuote, card dinamiche, riga che ricompare, card `unknown` che diventano `paid`, nodi riciclati, pagina di dettaglio, amazon.it non-video, e l'intera mock page (ogni elemento `data-expect` controllato).

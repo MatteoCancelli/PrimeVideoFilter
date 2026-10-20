@@ -3,6 +3,12 @@ html:not([data-pvf-debug]) [data-pvf-row="empty"] {
   display: none !important;
 }
 
+/* Hide not-entitled cards (and their carousel slot) before the script runs, so they never flash. */
+html:not([data-pvf-debug]) article[data-testid="card"][data-card-entitlement="Unentitled"],
+html:not([data-pvf-debug]) :has(> article[data-testid="card"][data-card-entitlement="Unentitled"]:only-child) {
+  display: none !important;
+}
+
 html[data-pvf-debug] [data-pvf="paid"] {
   outline: 3px solid red !important;
   outline-offset: -3px;

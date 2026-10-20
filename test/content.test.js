@@ -10,7 +10,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // Loads the page and runs the content scripts as the extension would (same global scope).
 function load(body, url = 'https://www.primevideo.com/storefront/home') {
-  const { window } = new JSDOM(`<!doctype html><body>${body}</body>`, { url, runScripts: 'dangerously' });
+  const { window } = new JSDOM(`<!doctype html><body>${body}</body>`, { url, runScripts: 'dangerously', pretendToBeVisual: true });
   for (const code of SCRIPTS) {
     const s = window.document.createElement('script');
     s.textContent = code;
@@ -90,6 +90,20 @@ test('reclassifies a recycled card that now shows another title', async () => {
   assert.equal(li.dataset.pvf, 'included');
 });
 
+test('re-checks an included card when hover adds a teaser label', async () => {
+  const w = load(row('r1', 'Mix', [tile(1, 'prime'), tile(2, '')]));
+  const li = w.document.querySelector('li');
+  assert.equal(li.dataset.pvf, 'included');
+  li.insertAdjacentHTML('beforeend', '<div><span>Primo episodio gratuito</span></div>');
+  await wait(400);
+  assert.equal(li.dataset.pvf, 'paid');
+});
+
+test('the CSS hides Unentitled cards before the script marks them', () => {
+  const { window: w } = new JSDOM(`<style>${src('content.css')}</style><div id="slot"><article data-testid="card" data-card-entitlement="Unentitled"><a href="/detail/1">x</a></article></div>`);
+  assert.equal(w.getComputedStyle(w.document.querySelector('article')).display, 'none');
+});
+
 test('on a detail page, the page title itself is never hidden', () => {
   const w = load(`<main><section><h1>Film</h1><div id="hero"><a href="/detail/1">Play</a><button>Rent HD €3.99</button></div></section>${row('r1', 'Simili', [tile(2, 'prime')])}</main>`,
     'https://www.primevideo.com/detail/1/ref=x');
@@ -109,7 +123,7 @@ test('works on amazon.it/gp/video', () => {
 test('the mock page ends with only included/unknown cards visible', async () => {
   const file = path.join(__dirname, '..', 'mock', 'index.html');
   const html = fs.readFileSync(file, 'utf8').replace(/<script src="[^"]*"><\/script>/g, '');
-  const { window: w } = new JSDOM(html, { url: 'file:///' + file.replace(/\\/g, '/'), runScripts: 'dangerously' });
+  const { window: w } = new JSDOM(html, { url: 'file:///' + file.replace(/\\/g, '/'), runScripts: 'dangerously', pretendToBeVisual: true });
   for (const code of SCRIPTS) {
     const s = w.document.createElement('script');
     s.textContent = code;

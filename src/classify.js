@@ -5,7 +5,17 @@
 // against each text node, aria-label, title and alt inside a card.
 // To support a new label, add it (lowercase) to the right list.
 const LABELS = {
-  // Evidence the user can watch the title. Wins over any paid label.
+  // Only a teaser is included (first episode free, the rest needs a subscription).
+  // Wins over everything, even data-card-entitlement="Entitled".
+  teaser: {
+    phrases: [
+      'primo episodio gratuito', 'primo episodio gratis', 'episodi successivi', 'richiedono abbonamento',
+      'richiedono un abbonamento', 'first episode free', 'subsequent episodes', 'require a subscription',
+      'requires a subscription',
+    ],
+    exact: [],
+  },
+  // Evidence the user can watch the title. Wins over paid labels (not over the attribute).
   included: {
     // Matched anywhere inside a single label (and in the card's full text).
     phrases: [
@@ -57,7 +67,7 @@ function titleKey(href) {
 
 const wordRe = (s) => new RegExp(`(?<![\\p{L}\\p{N}])${s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\p{L}\\p{N}])`, 'u');
 const compile = ({ phrases, exact }) => ({ phrases: phrases.map(wordRe), exact: new Set(exact) });
-const MATCHERS = { included: compile(LABELS.included), paid: compile(LABELS.paid) };
+const MATCHERS = { teaser: compile(LABELS.teaser), included: compile(LABELS.included), paid: compile(LABELS.paid) };
 
 const normalize = (s) => (s || '').replace(/[‘’]/g, "'").replace(/\s+/g, ' ').trim().toLowerCase();
 const matches = (m, label) => m.exact.has(label) || m.phrases.some((re) => re.test(label));
@@ -97,24 +107,25 @@ function cardLabels(card) {
 }
 
 // Returns "paid" | "included" | "unknown". Only "paid" leads to hiding.
+// Order: teaser labels > entitlement attribute > included labels > paid labels.
 function classifyCard(card) {
-  // Entitlement data attributes, if Amazon exposes them (e.g. data-card-entitlement="Unentitled").
-  let paidAttr = false;
+  const labels = cardLabels(card);
+  if (labels.some((l) => matches(MATCHERS.teaser, l))) return 'paid';
+
+  // Real cards carry data-card-entitlement="Entitled|Unentitled" on the <article>.
   for (const el of [card, ...card.querySelectorAll('*')]) {
     for (const { name, value } of el.attributes) {
       if (!name.startsWith('data-') || !name.includes('entitle')) continue;
       const v = normalize(value);
       if (v === 'entitled' || v === 'true') return 'included';
-      if (v === 'unentitled' || v === 'notentitled' || v === 'not_entitled' || v === 'false') paidAttr = true;
+      if (v === 'unentitled' || v === 'notentitled' || v === 'not_entitled' || v === 'false') return 'paid';
     }
   }
 
-  const labels = cardLabels(card);
   const fullText = normalize(card.textContent);
   if (labels.some((l) => matches(MATCHERS.included, l)) || MATCHERS.included.phrases.some((re) => re.test(fullText))) {
     return 'included';
   }
-  if (paidAttr) return 'paid';
 
   // Titles (alt of images inside links = posters, headings) are skipped so a movie called "Rent" is not hidden.
   const titles = new Set([...card.querySelectorAll('a img[alt], h1, h2, h3, h4, h5, h6')]

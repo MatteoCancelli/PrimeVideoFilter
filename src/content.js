@@ -57,10 +57,22 @@ function scan() {
 
 if (DEBUG) document.documentElement.setAttribute('data-pvf-debug', '');
 
-// SPA navigation and infinite scroll both show up as DOM insertions.
+// SPA navigation, infinite scroll and hover previews all show up as DOM insertions.
 // Our own changes are attributes only, so they don't retrigger the observer.
-let pending = 0;
-new MutationObserver(() => {
-  if (!pending) pending = setTimeout(() => { pending = 0; scan(); }, 150);
+// requestAnimationFrame scans before the next paint, so new cards don't flash;
+// the timeout covers pages that aren't painting (background tab).
+let pending = false;
+const run = () => { if (pending) { pending = false; scan(); } };
+new MutationObserver((records) => {
+  for (const r of records) {
+    // A card whose content changed (e.g. hover adds "Primo episodio gratuito") is classified again.
+    const card = r.target.closest && r.target.closest('[data-pvf]');
+    if (card) delete card.dataset.pvfKey;
+  }
+  if (!pending) {
+    pending = true;
+    requestAnimationFrame(run);
+    setTimeout(run, 100);
+  }
 }).observe(document.documentElement, { childList: true, subtree: true });
 scan();
