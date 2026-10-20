@@ -25,6 +25,8 @@ for (const [label, html] of [
   ['IT price', '<span>Da 3,99 €</span>'],
   ['IT channel', '<p>Abbonati a Paramount+</p>'],
   ['EN channel', '<p aria-label="Subscribe to Apple TV+"></p>'],
+  ['IT iscriviti', '<span>Iscriviti</span>'],
+  ['IT pre-order', '<span>Disponibile per la prenotazione</span>'],
   ['IT trial', '<span>Prova gratis per 7 giorni</span>'],
   ['EN trial', '<span>Start your free trial</span>'],
   ['IT channels label', '<span title="Canali Prime Video"></span>'],
@@ -102,4 +104,14 @@ test('findCard ignores links without a title id', () => {
 test('findCard ignores site navigation links', () => {
   const doc = dom('<nav><a href="/storefront/?benefitId=channels">Canali</a></nav>');
   assert.equal(findCard(doc.querySelector('a')), null);
+});
+
+test('findCard takes single-child wrappers so no empty slot is left', () => {
+  const doc = dom('<ul><li id="slot"><div><article data-testid="card"><a href="/detail/1">x</a></article></div></li><li><a href="/detail/2">y</a></li></ul>');
+  assert.equal(findCard(doc.querySelector('a')).id, 'slot');
+});
+
+test('findCard does not take the list when it has a single card', () => {
+  const doc = dom('<section><h2>R</h2><ul id="list"><li id="c"><a href="/detail/1">x</a></li></ul></section>');
+  assert.equal(findCard(doc.querySelector('a')).id, 'c');
 });

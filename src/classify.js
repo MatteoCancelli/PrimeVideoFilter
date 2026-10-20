@@ -26,7 +26,8 @@ const LABELS = {
       'noleggia', 'noleggio', 'rent', 'rental',
       'acquista', 'acquisto', 'buy', 'purchase',
       'noleggia o acquista', 'rent or buy',
-      'abbonati', 'abbonarti', 'iscriviti a', 'subscribe',
+      'abbonati', 'abbonarti', 'iscriviti', 'subscribe',
+      'prenotazione', 'preordina', 'pre-ordina', 'pre-order', 'preorder',
       'prova gratis', 'prova gratuita', 'periodo di prova', 'free trial', 'start your free trial',
       'canali prime video', 'canale prime video', 'prime video channels', 'prime video channel',
     ],
@@ -72,6 +73,10 @@ function findCard(anchor) {
     if (el.getElementsByTagName('*').length > MAX_CARD_NODES) break;
     if ([...el.querySelectorAll(ANCHOR_SELECTOR)].some((a) => titleKey(a.getAttribute('href')) !== key)) break;
     card = el;
+  }
+  // Also take single-child wrappers (but not a list or section), so hiding leaves no empty slot.
+  for (let p = card.parentElement; p && p.childElementCount === 1 && !p.matches(`${CARD_STOP}, ul, ol, [role="list"], section`); p = p.parentElement) {
+    card = p;
   }
   return card;
 }
