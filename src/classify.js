@@ -78,8 +78,9 @@ const matches = (m, label) => m.exact.has(label) || m.phrases.some((re) => re.te
 function findCard(anchor) {
   const key = titleKey(anchor.getAttribute('href'));
   if (!key || anchor.closest('header, nav')) return null; // site menu, not a card
-  let card = anchor;
-  for (let el = anchor.parentElement, depth = 0; el && depth < MAX_CARD_DEPTH; el = el.parentElement, depth++) {
+  // The real Prime Video card. Its hover preview, with links to other pages, is rendered inside it.
+  let card = anchor.closest('article[data-testid="card"]') || anchor;
+  for (let el = card === anchor ? anchor.parentElement : null, depth = 0; el && depth < MAX_CARD_DEPTH; el = el.parentElement, depth++) {
     if (card.matches(CARD_HINT) || el.matches(CARD_STOP) || el.querySelector('h1')) break;
     if (el.getElementsByTagName('*').length > MAX_CARD_NODES) break;
     if ([...el.querySelectorAll(ANCHOR_SELECTOR)].some((a) => titleKey(a.getAttribute('href')) !== key)) break;
@@ -107,7 +108,7 @@ function cardLabels(card) {
 }
 
 // Returns "paid" | "included" | "unknown". Only "paid" leads to hiding.
-// Order: teaser labels > entitlement attribute > included labels > paid labels.
+// Order: teaser labels > entitlement attribute > channel logo > included labels > paid labels.
 function classifyCard(card) {
   const labels = cardLabels(card);
   if (labels.some((l) => matches(MATCHERS.teaser, l))) return 'paid';
@@ -120,6 +121,12 @@ function classifyCard(card) {
       if (v === 'entitled' || v === 'true') return 'included';
       if (v === 'unentitled' || v === 'notentitled' || v === 'not_entitled' || v === 'false') return 'paid';
     }
+  }
+
+  // Channel logo baked into the thumbnail: .../benefit-id/m-r/mgmit/logos/channels-logo-white.png
+  const imgs = card.querySelectorAll('img[src], source[srcset]');
+  if ([...imgs].some((el) => /\/benefit-id\/[^/]+\/(?!prime)[^/]+\/logos\//i.test(el.getAttribute('src') || el.getAttribute('srcset')))) {
+    return 'paid';
   }
 
   const fullText = normalize(card.textContent);

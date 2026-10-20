@@ -35,6 +35,7 @@ File:
 2. **Classificare.** Per ogni card si raccolgono i testi visibili, `aria-label`, `title`, `alt` (inclusi i `<title>` degli SVG) e gli eventuali attributi `data-*entitle*`. In ordine di priorità:
    - un'etichetta **teaser** ("Primo episodio gratuito", "gli episodi successivi richiedono abbonamento", "First episode free") → `paid`, sempre;
    - l'attributo reale `data-card-entitlement` dell'`<article>`: `Unentitled` → `paid`, `Entitled` → `included`;
+   - il logo di un canale incorporato nell'URL della thumbnail (`…/benefit-id/…/<canale>/logos/…`) → `paid`;
    - un'etichetta **inclusa** ("prime", "Incluso con Prime", "Watch with Prime", oppure "Noleggiato"/"Purchased"/"Il noleggio scade…" per ciò che hai già comprato) → `included`, e prevale sulle etichette a pagamento;
    - altrimenti un'etichetta **a pagamento** ("Noleggia", "Acquista", "Rent", "Buy", "Abbonati", "Subscribe", "Prova gratis", "Free trial", "Canali Prime Video", un prezzo come "3,99 €", un link `benefitId=` a un canale) → `paid`;
    - altrimenti `unknown`.

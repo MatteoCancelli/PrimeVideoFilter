@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Prime Video Filter",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Nasconde da Prime Video i contenuti non inclusi in Prime (noleggio, acquisto, canali a pagamento).",
   "icons": {
     "16": "icons/icon16.png",

@@ -32,6 +32,10 @@ Log del lavoro svolto in autonomia (notte 19–20/10/2026).
 - Richiesta dell'utente: nascondere anche "Primo episodio gratuito, gli episodi successivi richiedono abbonamento". Nuova categoria `teaser` che vince su tutto, anche su `Entitled`. **Cambiata la priorità**: l'attributo `data-card-entitlement` ora vince sulle etichette "incluse" (prima era il contrario); è il segnale più affidabile visto finora.
 - Terza prova reale: "Primo episodio gratuito" compare solo nell'anteprima in hover, che è un elemento **fuori** dalla card: veniva nascosta l'anteprima ma non la thumbnail (marcata `Entitled`). Ora un titolo visto come `paid` in qualunque elemento finisce in `paidKeys` e tutte le card con lo stesso id `/detail/…` vengono nascoste. Limite: queste card spariscono solo dopo il primo hover (a riposo non c'è ancora un segnale noto).
 
+- Quarta prova reale ("American Hostage", canale MGM+): l'`<article>` **non ha** `data-card-entitlement`. Segnale a riposo trovato: il logo del canale è incorporato nell'URL dell'immagine (`…/benefit-id/m-r/mgmit/logos/channels-logo-white.png`; anche Tenken aveva `…/yamatoit/logos/…`) → `paid`, a meno che la card sia `Entitled` (canale a cui sei abbonato) o il benefit-id inizi con `prime`.
+- Bug: in hover l'anteprima viene inserita **dentro** l'article con link ad altre pagine (es. `benefitId=`), quindi `findCard` si fermava al `packshot`. Ora, se esiste, la card è sempre l'`article[data-testid="card"]` (più i wrapper con un solo figlio).
+- Visto ma non usato: il parametro `jic` dei link contiene in base64 parole come `subscription`, `tvod`, `all`. Probabilmente descrive il contesto della riga e non il titolo; troppo incerto.
+
 ## Verifiche fatte
 
 - `npm test`: 50 test (node:test + jsdom) su classificazione, ricerca della card, nascondimento, CSS, righe vuote, card dinamiche, riga che ricompare, card `unknown` che diventano `paid`, nodi riciclati, pagina di dettaglio, amazon.it non-video, e l'intera mock page (ogni elemento `data-expect` controllato).

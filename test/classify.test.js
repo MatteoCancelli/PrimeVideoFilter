@@ -134,3 +134,29 @@ test('real card: Entitled is included', () => {
   const doc = dom(realCard('Entitled', 'Arma letale 4').replace('<title>Store Filled</title>', ''));
   assert.equal(classifyCard(findCard(doc.querySelector('a'))), 'included');
 });
+
+// Real card without data-card-entitlement (primevideo.com, 20/10/2026): MGM+ logo baked into the image.
+const channelImg = 'https://images-eu.ssl-images-amazon.com/images/S/pv-target-images/a71._UR1920,1080_CLs%7C1920,1080%7C/G/bundle/BottomRightCardGradient16x9.png,/G/01/digital/video/merch/subs/benefit-id/m-r/mgmit/logos/channels-logo-white.png%7C0,0_SX624_FMjpg_.jpg';
+const hostage = (img, extra = '') => `<div class="_row"><div class="_slot"><article data-card-title="American Hostage (Stagione 1)" data-card-entity-type="TV Show" data-card-position="0" data-card-can-hover="true" data-testid="card" data-card-playback-behaviour="EXPANDED"><section data-testid="card-section"><div data-testid="packshot"><button aria-label="American Hostage" aria-expanded="false"></button><a href="/detail/0QZ50JRUBHLGKRPARQVEE277X2?jic=20%7CEgxzdWJzY3JpcHRpb24%3D&amp;ref_=atv_hm_hom_c_3ykzez_brws_7_1" tabindex="-1">American Hostage</a><div><picture><source type="image/avif" srcset="${img} 325w"><img alt="" src="${img}" data-testid="base-image"></picture></div><span data-testid="metadata-badge" aria-label="NUOVO EPISODIO" role="img">NUOVO EPISODIO</span></div>${extra}</section></article></div><div class="_slot"><article data-testid="card"><a href="/detail/OTHER">Other</a></article></div></div>`;
+
+test('real card: channel logo in the thumbnail URL is paid', () => {
+  const doc = dom(hostage(channelImg));
+  const c = findCard(doc.querySelector('a'));
+  assert.equal(c.className, '_slot');
+  assert.equal(classifyCard(c), 'paid');
+});
+
+test('real card: no channel logo stays unknown', () => {
+  const doc = dom(hostage('https://images-eu.ssl-images-amazon.com/images/S/pv-target-images/a71._UR1920,1080_SX624_FMjpg_.jpg'));
+  assert.equal(classifyCard(findCard(doc.querySelector('a'))), 'unknown');
+});
+
+test('real card: subscribed channel (Entitled) stays visible', () => {
+  const doc = dom(hostage(channelImg).replace('data-testid="card" data-card-playback', 'data-testid="card" data-card-entitlement="Entitled" data-card-playback'));
+  assert.equal(classifyCard(findCard(doc.querySelector('a'))), 'included');
+});
+
+test('findCard: hover preview with other links inside the article still gives the article', () => {
+  const doc = dom(hostage('x.jpg', '<div class="_preview"><a href="/storefront/?benefitId=mgmit">Iscriviti a MGM+</a><a href="/detail/0EPISODE2">Ep. 2</a></div>'));
+  assert.equal(findCard(doc.querySelector('a')).className, '_slot');
+});
