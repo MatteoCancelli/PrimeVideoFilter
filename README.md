@@ -5,11 +5,22 @@ Resta visibile ciò che è incluso in Prime e tutto ciò che non si può classif
 
 Nessun popup, nessuna opzione, nessuna richiesta di rete, nessun dato raccolto. Nessun permesso API: solo content script.
 
+> 🇬🇧 *Chrome extension (Manifest V3) that hides Prime Video titles not included in your Prime subscription (rent, buy, paid channels, "first episode free" teasers). No permissions, no network requests, no data collection. Labels are recognized in Italian and English. Install: download the ZIP below, then `chrome://extensions` → Developer mode → Load unpacked.*
+
 ## Installazione
+
+### Scaricare l'estensione
+
+- **Senza git:** su GitHub clicca **Code → Download ZIP** ([link diretto](https://github.com/MatteoCancelli/PrimeVideoFilter/archive/refs/heads/main.zip)) ed estrai lo ZIP in una cartella che non cancellerai (Chrome la usa ogni volta che si avvia).
+- **Con git:** `git clone https://github.com/MatteoCancelli/PrimeVideoFilter.git`
+
+Per aggiornare: riscarica lo ZIP (o `git pull`) nella stessa cartella, poi clicca ↻ sull'estensione.
+
+### Caricarla in Chrome (o Edge, Brave e altri browser Chromium)
 
 1. Apri `chrome://extensions` in Chrome.
 2. Attiva **Modalità sviluppatore** (in alto a destra).
-3. Clicca **Carica estensione non pacchettizzata** e seleziona questa cartella (quella che contiene `manifest.json`).
+3. Clicca **Carica estensione non pacchettizzata** e seleziona la cartella estratta (quella che contiene `manifest.json`).
 4. Apri (o ricarica) Prime Video.
 
 Dopo ogni modifica al codice: clicca l'icona ↻ dell'estensione in `chrome://extensions` e ricarica la scheda di Prime Video.
@@ -99,3 +110,11 @@ npm run icons      # rigenera icons/*.png
 ```
 
 `mock/index.html` è una pagina offline con card finte (IT/EN, markup variegato, classi offuscate, righe solo a pagamento, card aggiunte dinamicamente dopo 1–2,5 s). Aprila direttamente nel browser (doppio clic): carica gli script di `src/` e dopo ~3,5 s la barra in alto mostra **Self-check OK** se ogni elemento è visibile/nascosto come previsto. Il pulsante *Toggle DEBUG* mostra in rosso cosa viene nascosto.
+
+## Segnalare un problema / contribuire
+
+Amazon cambia il markup di Prime Video senza preavviso: quando una card a pagamento sfugge al filtro (o una inclusa sparisce), apri una [issue](https://github.com/MatteoCancelli/PrimeVideoFilter/issues) allegando l'outerHTML dell'`<article data-testid="card">` interessato. La procedura è descritta in [CHECKLIST_MANUALE.md](CHECKLIST_MANUALE.md#come-segnalare--raccogliere-un-selettore-che-non-funziona). Le pull request sono benvenute: aggiungi un caso in `test/` e verifica che `npm test` passi.
+
+## Licenza e note legali
+
+[GPL-3.0](LICENSE). Progetto indipendente, non affiliato, sponsorizzato o approvato da Amazon. "Prime Video" è un marchio di Amazon.com, Inc. o delle sue affiliate, citato solo per indicare il sito su cui l'estensione funziona.
