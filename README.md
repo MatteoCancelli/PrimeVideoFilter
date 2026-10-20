@@ -111,6 +111,21 @@ npm run icons      # rigenera icons/*.png
 
 `mock/index.html` è una pagina offline con card finte (IT/EN, markup variegato, classi offuscate, righe solo a pagamento, card aggiunte dinamicamente dopo 1–2,5 s). Aprila direttamente nel browser (doppio clic): carica gli script di `src/` e dopo ~3,5 s la barra in alto mostra **Self-check OK** se ogni elemento è visibile/nascosto come previsto. Il pulsante *Toggle DEBUG* mostra in rosso cosa viene nascosto.
 
+## Domande frequenti
+
+**Funziona sulle app delle smart TV (Samsung, LG, Android TV / Google TV, Fire TV)?**
+No. L'estensione funziona solo nei browser desktop basati su Chromium, perché inserisce uno script nella pagina web di Prime Video. Le app delle TV sono chiuse e non accettano estensioni; modificarle richiede root/jailbreak, viola i termini di Amazon e di solito blocca la riproduzione (DRM). Nemmeno un filtro di rete (DNS, Pi-hole, proxy) può aiutare: il catalogo arriva cifrato e i titoli a pagamento arrivano insieme a quelli inclusi.
+Alternative:
+1. Sfoglia su primevideo.com dal PC con il filtro attivo e manda il video alla TV con l'icona **Trasmetti** del player (TV con Chromecast integrato o chiavetta Chromecast).
+2. Collega il PC alla TV con un cavo HDMI.
+3. Nell'app della TV usa, se presente, la sezione o il filtro **"Incluso con Prime"** (dipende dal modello e dalla versione dell'app).
+
+**Funziona su Firefox, Safari o smartphone?**
+Non oggi: solo Chrome, Edge, Brave e gli altri browser Chromium su computer. Le app per smartphone hanno lo stesso limite delle app TV.
+
+**Raccoglie dati o rallenta Prime Video?**
+No. Non chiede permessi, non fa richieste di rete e non salva nulla: legge la pagina e aggiunge solo attributi che il CSS usa per nascondere le card.
+
 ## Segnalare un problema / contribuire
 
 Amazon cambia il markup di Prime Video senza preavviso: quando una card a pagamento sfugge al filtro (o una inclusa sparisce), apri una [segnalazione](https://github.com/MatteoCancelli/PrimeVideoFilter/issues/new/choose) (il modulo guida passo passo) allegando l'outerHTML dell'`<article data-testid="card">` interessato. La procedura è descritta in [CHECKLIST_MANUALE.md](CHECKLIST_MANUALE.md#come-segnalare--raccogliere-un-selettore-che-non-funziona). Le pull request sono benvenute: aggiungi un caso in `test/` e verifica che `npm test` passi.
