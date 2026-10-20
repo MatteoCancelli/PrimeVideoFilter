@@ -31,11 +31,13 @@ function findRow(card, cache) {
 function scan() {
   // On amazon.* only the /gp/video/ pages are Prime Video (the SPA may navigate elsewhere).
   if (/(^|\.)amazon\./.test(location.hostname) && !location.pathname.includes('/gp/video/')) return;
-  const pageKey = titleKey(location.pathname); // on a detail page, don't treat its own links as cards
+  // On a detail page the buy/rent buttons link to titles too: only touch real carousel cards there.
+  const detailPage = titleKey(location.pathname) !== null;
   const cards = new Set();
   for (const a of document.querySelectorAll(ANCHOR_SELECTOR)) {
     const key = titleKey(a.getAttribute('href'));
-    if (!key || key === pageKey) continue;
+    if (!key || location.pathname.includes(key)) continue;
+    if (detailPage && !a.closest('article[data-testid="card"]')) continue;
     let card = cardOf.get(a);
     if (!card || !card.contains(a) || card.dataset.pvfKey !== key) cardOf.set(a, (card = findCard(a)));
     if (!card || cards.has(card)) continue;

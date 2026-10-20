@@ -121,6 +121,16 @@ test('on a detail page, the page title itself is never hidden', () => {
   assert.equal(w.document.getElementById('hero').dataset.pvf, undefined);
 });
 
+test('on a detail page, buy/rent buttons are kept and only real cards are filtered', () => {
+  const w = load(`<main><div id="buybox"><a href="/detail/0HDEDITION?ref=buy">Acquista HD 9,99 €</a></div><div id="rent"><a href="/detail/0SDEDITION?ref=rent">Noleggia SD 3,99 €</a></div>
+    <section><h2>Altri titoli simili</h2><div><div id="s1"><article data-testid="card" data-card-entitlement="Unentitled"><a href="/detail/0SIM1">x</a></article></div><div id="s2"><article data-testid="card" data-card-entitlement="Entitled"><a href="/detail/0SIM2">y</a></article></div></div></section></main>`,
+  'https://www.primevideo.com/detail/Some-Movie/0MAIN/ref=x');
+  assert.equal(w.document.getElementById('buybox').dataset.pvf, undefined);
+  assert.equal(w.document.getElementById('rent').dataset.pvf, undefined);
+  assert.equal(w.document.getElementById('s1').dataset.pvf, 'paid');
+  assert.equal(w.document.getElementById('s2').dataset.pvf, 'included');
+});
+
 test('does nothing on non-video amazon pages', () => {
   const w = load(row('r1', 'X', [tile(1, 'Buy')]), 'https://www.amazon.it/dp/B000');
   assert.equal(w.document.querySelector('li').dataset.pvf, undefined);

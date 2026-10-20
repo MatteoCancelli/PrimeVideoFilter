@@ -38,6 +38,8 @@ Log del lavoro svolto in autonomia (notte 19–20/10/2026).
 
 - 20/10, quinta prova reale: tutto nascosto senza hover, nessun lampo visibile.
 
+- Sesta prova reale: righe solo a pagamento, ricerca, navigazione SPA e scroll OK. Bug: sulla pagina di dettaglio di un titolo a pagamento sparivano i tasti Noleggia/Acquista (probabilmente puntano a un id diverso, es. edizione HD/SD, o l'URL ha uno slug). Ora sulle pagine di dettaglio vengono considerati solo i link dentro `article[data-testid="card"]`. "Continua a guardare" con titoli noleggiati: non verificabile dall'utente.
+
 ## Verifiche fatte
 
 - `npm test`: 50 test (node:test + jsdom) su classificazione, ricerca della card, nascondimento, CSS, righe vuote, card dinamiche, riga che ricompare, card `unknown` che diventano `paid`, nodi riciclati, pagina di dettaglio, amazon.it non-video, e l'intera mock page (ogni elemento `data-expect` controllato).
