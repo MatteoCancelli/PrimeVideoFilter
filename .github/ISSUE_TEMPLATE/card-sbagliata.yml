@@ -1,0 +1,54 @@
+name: Card filtrata male
+description: Un contenuto a pagamento resta visibile, oppure uno incluso in Prime sparisce.
+title: "[Card] "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: tipo
+    attributes:
+      label: Cosa succede
+      options:
+        - Un contenuto a pagamento resta visibile
+        - Un contenuto incluso in Prime sparisce
+        - Sparisce un'intera riga o parte della pagina
+        - Altro
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Pagina
+      description: "URL della pagina (es. https://www.primevideo.com/storefront/home). Togli eventuali dati personali."
+    validations:
+      required: true
+  - type: input
+    id: titolo
+    attributes:
+      label: Titolo del contenuto
+      description: Il nome del film o della serie e, se lo vedi, la scritta sulla card (es. "Noleggia", "Iscriviti", "Primo episodio gratuito").
+    validations:
+      required: true
+  - type: textarea
+    id: html
+    attributes:
+      label: outerHTML della card
+      description: |
+        Ricarica la pagina senza passare il mouse sulla card. Tasto destro sulla copertina → Ispeziona → in Elements risali fino a `<article … data-testid="card">` → tasto destro → Copy → Copy outerHTML, e incolla qui.
+      render: html
+    validations:
+      required: true
+  - type: input
+    id: versione
+    attributes:
+      label: Versione dell'estensione
+      description: La trovi in chrome://extensions (es. 1.5.0).
+    validations:
+      required: true
+  - type: dropdown
+    id: lingua
+    attributes:
+      label: Lingua dell'interfaccia di Prime Video
+      options:
+        - Italiano
+        - Inglese
+        - Altra

@@ -5,16 +5,16 @@ Resta visibile ciò che è incluso in Prime e tutto ciò che non si può classif
 
 Nessun popup, nessuna opzione, nessuna richiesta di rete, nessun dato raccolto. Nessun permesso API: solo content script.
 
-> 🇬🇧 *Chrome extension (Manifest V3) that hides Prime Video titles not included in your Prime subscription (rent, buy, paid channels, "first episode free" teasers). No permissions, no network requests, no data collection. Labels are recognized in Italian and English. Install: download the ZIP below, then `chrome://extensions` → Developer mode → Load unpacked.*
+> 🇬🇧 *Chrome extension (Manifest V3) that hides Prime Video titles not included in your Prime subscription (rent, buy, paid channels, "first episode free" teasers). No permissions, no network requests, no data collection. Labels are recognized in Italian and English. Install: download `PrimeVideoFilter-vX.Y.Z.zip` from the [latest release](https://github.com/MatteoCancelli/PrimeVideoFilter/releases/latest), unzip, then `chrome://extensions` → Developer mode → Load unpacked.*
 
 ## Installazione
 
 ### Scaricare l'estensione
 
-- **Senza git:** su GitHub clicca **Code → Download ZIP** ([link diretto](https://github.com/MatteoCancelli/PrimeVideoFilter/archive/refs/heads/main.zip)) ed estrai lo ZIP in una cartella che non cancellerai (Chrome la usa ogni volta che si avvia).
-- **Con git:** `git clone https://github.com/MatteoCancelli/PrimeVideoFilter.git`
+- **Consigliato:** dall'[ultima release](https://github.com/MatteoCancelli/PrimeVideoFilter/releases/latest) scarica **`PrimeVideoFilter-vX.Y.Z.zip`** (contiene solo l'estensione; gli archivi "Source code" includono anche test e pagina di prova) ed estrailo in una cartella che non cancellerai: Chrome la usa ogni volta che si avvia.
+- **Con git** (per sviluppare): `git clone https://github.com/MatteoCancelli/PrimeVideoFilter.git`
 
-Per aggiornare: riscarica lo ZIP (o `git pull`) nella stessa cartella, poi clicca ↻ sull'estensione.
+Per aggiornare: estrai lo ZIP della nuova release sopra la stessa cartella (o `git pull`), poi clicca ↻ sull'estensione in `chrome://extensions`. Le novità di ogni versione sono nelle [release](https://github.com/MatteoCancelli/PrimeVideoFilter/releases).
 
 ### Caricarla in Chrome (o Edge, Brave e altri browser Chromium)
 
@@ -113,7 +113,14 @@ npm run icons      # rigenera icons/*.png
 
 ## Segnalare un problema / contribuire
 
-Amazon cambia il markup di Prime Video senza preavviso: quando una card a pagamento sfugge al filtro (o una inclusa sparisce), apri una [issue](https://github.com/MatteoCancelli/PrimeVideoFilter/issues) allegando l'outerHTML dell'`<article data-testid="card">` interessato. La procedura è descritta in [CHECKLIST_MANUALE.md](CHECKLIST_MANUALE.md#come-segnalare--raccogliere-un-selettore-che-non-funziona). Le pull request sono benvenute: aggiungi un caso in `test/` e verifica che `npm test` passi.
+Amazon cambia il markup di Prime Video senza preavviso: quando una card a pagamento sfugge al filtro (o una inclusa sparisce), apri una [segnalazione](https://github.com/MatteoCancelli/PrimeVideoFilter/issues/new/choose) (il modulo guida passo passo) allegando l'outerHTML dell'`<article data-testid="card">` interessato. La procedura è descritta in [CHECKLIST_MANUALE.md](CHECKLIST_MANUALE.md#come-segnalare--raccogliere-un-selettore-che-non-funziona). Le pull request sono benvenute: aggiungi un caso in `test/` e verifica che `npm test` passi.
+
+### Pubblicare una nuova versione
+
+1. Aggiorna `"version"` in `manifest.json`, poi commit.
+2. `git tag -a vX.Y.Z -m "Prime Video Filter X.Y.Z" && git push origin main vX.Y.Z`
+3. ZIP con solo l'estensione: `git archive --format=zip --prefix=PrimeVideoFilter/ -o dist/PrimeVideoFilter-vX.Y.Z.zip vX.Y.Z manifest.json src icons README.md LICENSE`
+4. `gh release create vX.Y.Z dist/PrimeVideoFilter-vX.Y.Z.zip --title vX.Y.Z --notes "…"`
 
 ## Licenza e note legali
 
