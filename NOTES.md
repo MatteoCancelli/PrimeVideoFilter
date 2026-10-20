@@ -8,7 +8,7 @@ Log del lavoro svolto in autonomia (notte 19–20/10/2026).
 2. **Commit in inglese**, documentazione in italiano.
 3. **`run_at: document_idle`**: le card vengono renderizzate da JS dopo il caricamento; partire prima non dà vantaggi e l'observer copre il resto. Possibile breve "flash" di card a pagamento prima del filtro (vedi limiti).
 4. **Domini**: `*.primevideo.com` + `amazon.{it,com,co.uk,de,fr,es,ca,com.au}` sul percorso `*gp/video/*` (il `*` iniziale copre il prefisso lingua `/-/en/`). Altri amazon.* non aggiunti: lingua diversa da IT/EN → nessuna etichetta riconosciuta, quindi inutili. Lo script, se la SPA esce da `/gp/video/` su amazon.*, non fa nulla.
-5. **Il verdetto "incluso" vince sempre** (anche su un'etichetta a pagamento nella stessa card), come da specifica; "incluso" comprende anche "già noleggiato/acquistato" ("Noleggiato", "Purchased", "Il noleggio scade…") perché in "Continua a guardare" un titolo già pagato è guardabile e va lasciato.
+5. *(Superata il 20/10: ora l'ordine è teaser > attributo > logo canale > incluso > a pagamento.)* **Il verdetto "incluso" vince sempre** (anche su un'etichetta a pagamento nella stessa card), come da specifica; "incluso" comprende anche "già noleggiato/acquistato" ("Noleggiato", "Purchased", "Il noleggio scade…") perché in "Continua a guardare" un titolo già pagato è guardabile e va lasciato.
 6. **Etichette a pagamento esatte `store`/`negozio`**: ipotizzo che l'icona "carrello/store" delle card abbia questo testo come `<title>`/aria-label. Solo come etichetta esatta, per non colpire frasi.
 7. **Attributi `data-*entitle*`**: se Amazon espone qualcosa come `data-card-entitlement="Entitled|Unentitled"` (lo ricordo da userscript della comunità, non verificato), `Entitled/true` → incluso, `Unentitled/false` → a pagamento.
 8. **Link `?benefitId=…`** (pagine di offerta di un canale) sono trattati come card e come evidenza "a pagamento", tranne se il valore inizia con `prime`.
@@ -35,6 +35,8 @@ Log del lavoro svolto in autonomia (notte 19–20/10/2026).
 - Quarta prova reale ("American Hostage", canale MGM+): l'`<article>` **non ha** `data-card-entitlement`. Segnale a riposo trovato: il logo del canale è incorporato nell'URL dell'immagine (`…/benefit-id/m-r/mgmit/logos/channels-logo-white.png`; anche Tenken aveva `…/yamatoit/logos/…`) → `paid`, a meno che la card sia `Entitled` (canale a cui sei abbonato) o il benefit-id inizi con `prime`.
 - Bug: in hover l'anteprima viene inserita **dentro** l'article con link ad altre pagine (es. `benefitId=`), quindi `findCard` si fermava al `packshot`. Ora, se esiste, la card è sempre l'`article[data-testid="card"]` (più i wrapper con un solo figlio).
 - Visto ma non usato: il parametro `jic` dei link contiene in base64 parole come `subscription`, `tvod`, `all`. Probabilmente descrive il contesto della riga e non il titolo; troppo incerto.
+
+- 20/10, quinta prova reale: tutto nascosto senza hover, nessun lampo visibile.
 
 ## Verifiche fatte
 
